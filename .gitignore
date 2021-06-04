@@ -1,1 +1,3 @@
-ServiceAccountToken.json
+**/ServiceAccountToken.json
+
+**/**.ignore
