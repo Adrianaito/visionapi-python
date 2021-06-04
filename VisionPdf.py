@@ -1,6 +1,7 @@
 # gs://pdf_ex123/領収書サンプル.pdf
 # gs://pdf_ex123/sample1.pdf
 
+import logging
 import pdb
 import io
 from google.cloud import storage
@@ -75,14 +76,47 @@ for file in output:
     json_string = file.download_as_string()
     response = json.loads(json_string)
 
+
 # The actual response for the first page of the input file.
-first_page_response = response['responses'][0]
-annotation = first_page_response['fullTextAnnotation']
-pdb.set_trace()
+
+# first_page_response = response['responses'][0]
+# annotation = first_page_response['fullTextAnnotation']
+
+# pdb.set_trace()
+
+for page in response['responses']:
+    # print("This is a page -.O")
+    annotation = page['fullTextAnnotation']
+    context = page['context']
+
+    text = annotation['text']
+    pageNumber = context['pageNumber']
+
+    print(text)
+    print(pageNumber)
 
 # print the full text from the first page.
 # The response contains more information:
 # annotation/pages/blocks/paragraphs/words/symbols
 # including confidence scores and bounding boxes
-print('Full text:\n')
-print(annotation['text'])
+
+# print('Full text:\n')
+# print(annotation['text'])
+
+logging.basicConfig(filename="myResponse.log",
+                    filemode='a',
+                    format='%(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
+log = logging.getLogger("MyLog")
+log.debug(response)
+
+logging.basicConfig(filename="myResponseText.log",
+                    filemode='a',
+                    format='%(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.DEBUG)
+
+log = logging.getLogger("MyLogText")
+log.debug(annotation['text'])
