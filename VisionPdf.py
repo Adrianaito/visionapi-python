@@ -1,11 +1,13 @@
 # gs://pdf_ex123/領収書サンプル.pdf
 # gs://pdf_ex123/sample1.pdf
+# gs://pdf_ex123/sample4.pdf
 
 import logging
 import pdb
 import io
 from google.cloud import storage
-from google.cloud import vision
+# from google.cloud import vision
+from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
 import json
 import os
@@ -18,30 +20,30 @@ import re
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'ServiceAccountToken.json'
 
 
-client = vision.ImageAnnotatorClient()
+client = vision_v1.ImageAnnotatorClient()
 
 # Supported mime_types are: 'application/pdf' and 'image/tiff'
 mime_type = 'application/pdf'
 
 # How many pages should be grouped into each json output file.
-batch_size = 10
+batch_size = 100
 
 # client = vision.ImageAnnotatorClient()
 
-feature = vision.Feature(
-    type_=vision.Feature.Type.DOCUMENT_TEXT_DETECTION)
+feature = vision_v1.Feature(
+    type_=vision_v1.Feature.Type.DOCUMENT_TEXT_DETECTION)
 
-gcs_source_uri = 'gs://pdf_ex123/sample1.pdf'
-gcs_source = vision.GcsSource(uri=gcs_source_uri)
-input_config = vision.InputConfig(
+gcs_source_uri = 'gs://pdf_ex123/領収書サンプル.pdf'
+gcs_source = vision_v1.GcsSource(uri=gcs_source_uri)
+input_config = vision_v1.InputConfig(
     gcs_source=gcs_source, mime_type=mime_type)
 
 gcs_destination_uri = 'gs://pdf_ex123/pdf_result'
-gcs_destination = vision.GcsDestination(uri=gcs_destination_uri)
-output_config = vision.OutputConfig(
+gcs_destination = vision_v1.GcsDestination(uri=gcs_destination_uri)
+output_config = vision_v1.OutputConfig(
     gcs_destination=gcs_destination, batch_size=batch_size)
 
-async_request = vision.AsyncAnnotateFileRequest(
+async_request = vision_v1.AsyncAnnotateFileRequest(
     features=[feature], input_config=input_config,
     output_config=output_config)
 
@@ -82,19 +84,27 @@ for file in output:
 # first_page_response = response['responses'][0]
 # annotation = first_page_response['fullTextAnnotation']
 
-# pdb.set_trace()
+    for page in response['responses']:
+        # print("This is a page -.O")
+        annotation = page['fullTextAnnotation']
+        context = page['context']
 
-for page in response['responses']:
-    # print("This is a page -.O")
-    annotation = page['fullTextAnnotation']
-    context = page['context']
+        text = annotation['text']
+        pageNumber = context['pageNumber']
 
-    text = annotation['text']
-    pageNumber = context['pageNumber']
+        print(text)
+        print(pageNumber)
 
-    print(text)
-    print(pageNumber)
+        logging.basicConfig(filename="myResponseText.log",
+                            filemode='a',
+                            format='%(message)s',
+                            datefmt='%H:%M:%S',
+                            level=logging.DEBUG)
 
+        log = logging.getLogger("MyLogText")
+        log.debug(text)
+
+pdb.set_trace()
 # print the full text from the first page.
 # The response contains more information:
 # annotation/pages/blocks/paragraphs/words/symbols
@@ -103,20 +113,11 @@ for page in response['responses']:
 # print('Full text:\n')
 # print(annotation['text'])
 
-logging.basicConfig(filename="myResponse.log",
-                    filemode='a',
-                    format='%(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
+# logging.basicConfig(filename="myResponse.log",
+#                     filemode='a',
+#                     format='%(message)s',
+#                     datefmt='%H:%M:%S',
+#                     level=logging.DEBUG)
 
-log = logging.getLogger("MyLog")
-log.debug(response)
-
-logging.basicConfig(filename="myResponseText.log",
-                    filemode='a',
-                    format='%(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
-
-log = logging.getLogger("MyLogText")
-log.debug(annotation['text'])
+# log = logging.getLogger("MyLog")
+# log.debug(response)
