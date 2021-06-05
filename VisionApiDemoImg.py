@@ -15,7 +15,7 @@ def run_quicktart():
     client = vision.ImageAnnotatorClient()
 
     # The name of the image file to annotate
-    file_name = os.path.abspath('resources/wakeupcat.jpeg')
+    file_name = os.path.abspath('resources/meme.png')
 
     # Loads the image into memory
     with io.open(file_name, 'rb') as image_file:
