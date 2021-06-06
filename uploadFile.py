@@ -1,6 +1,4 @@
 from google.cloud.storage import bucket
-
-
 try:
     import io
     from io import BytesIO
@@ -10,17 +8,28 @@ try:
 except Exception as e:
     print("Some Modules are missing {}".format(e))
 
-storage_client = storage.Client.from_service_account_json(
-    "ServiceAccountToken.json")
 
-bucket = storage_client.get_bucket("pdf_ex123")
+def uploadFile(file):
+    storage_client = storage.Client.from_service_account_json(
+        "ServiceAccountToken.json")
 
-id = str(uuid.uuid1())[:4]
+    bucket = storage_client.get_bucket("pdf_ex123")
 
-fileName = "%s/%s" % ('', f"{id}.png")
-blob = bucket.blob(fileName)
+    id = str(uuid.uuid1())[:4]
 
-with open('resources/meme.png', 'rb') as f:
-    blob.upload_from_file(f)
+    # read binary
+    fileName = "%s/%s" % ('', f"{file}")
+    blob = bucket.blob(fileName)
 
-print("Upload complete")
+    with open(f'resources/{file}', 'rb') as f:
+        blob.upload_from_file(f)
+
+    # or...(not working)
+    # fileName = "%s/%s" % ('', f"{id}.png")
+    # blob = bucket.blob(fileName)
+    # blob.upload_from_file('meme.png')
+
+    print("Upload complete")
+
+
+uploadFile("meme.png")
