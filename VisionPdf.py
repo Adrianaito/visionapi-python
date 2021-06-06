@@ -19,6 +19,7 @@ from uploadFile import uploadFile
 def run_quicktart_pdf(file):
 
     uploadFile(file)
+
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'ServiceAccountToken.json'
 
     client = vision_v1.ImageAnnotatorClient()
@@ -115,14 +116,5 @@ def run_quicktart_pdf(file):
     # print('Full text:\n')
     # print(annotation['text'])
 
-    # logging.basicConfig(filename="myResponse.log",
-    #                     filemode='a',
-    #                     format='%(message)s',
-    #                     datefmt='%H:%M:%S',
-    #                     level=logging.DEBUG)
 
-    # log = logging.getLogger("MyLog")
-    # log.debug(response)
-
-
-run_quicktart_pdf("sample2.pdf")
+run_quicktart_pdf("sample1.pdf")

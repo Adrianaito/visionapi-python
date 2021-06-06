@@ -2,7 +2,6 @@ from google.cloud.storage import bucket
 try:
     import io
     from io import BytesIO
-    # import pandas as pd
     import uuid
     from google.cloud import storage
 except Exception as e:
