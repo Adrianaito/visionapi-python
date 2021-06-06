@@ -29,7 +29,7 @@ def uploadFile(file):
     # blob = bucket.blob(fileName)
     # blob.upload_from_file('meme.png')
 
-    print("Upload complete")
+    print("Upload complete!")
 
 
 uploadFile("meme.png")
