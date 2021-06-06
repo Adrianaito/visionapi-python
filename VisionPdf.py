@@ -2,13 +2,13 @@ import logging
 import pdb
 import io
 from google.cloud import storage
-# from google.cloud import vision
 from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
 import json
 import os
 import re
 import uuid
+from uploadFile import uploadFile
 
 # gs://pdf_ex123/sample4.pdf
 
@@ -18,6 +18,7 @@ import uuid
 
 def run_quicktart_pdf(file):
 
+    uploadFile(file)
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'ServiceAccountToken.json'
 
     client = vision_v1.ImageAnnotatorClient()
@@ -36,7 +37,7 @@ def run_quicktart_pdf(file):
     feature = vision_v1.Feature(
         type_=vision_v1.Feature.Type.DOCUMENT_TEXT_DETECTION)
 
-    gcs_source_uri = f"gs://pdf_ex123/{file}.pdf"
+    gcs_source_uri = f"gs://pdf_ex123/{file}"
     gcs_source = vision_v1.GcsSource(uri=gcs_source_uri)
     input_config = vision_v1.InputConfig(
         gcs_source=gcs_source, mime_type=mime_type)
@@ -124,4 +125,4 @@ def run_quicktart_pdf(file):
     # log.debug(response)
 
 
-run_quicktart_pdf("領収書サンプル")
+run_quicktart_pdf("sample2.pdf")

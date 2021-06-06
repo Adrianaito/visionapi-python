@@ -18,7 +18,7 @@ def uploadFile(file):
     id = str(uuid.uuid1())[:4]
 
     # read binary
-    fileName = "%s/%s" % ('', f"{file}")
+    fileName = "%s%s" % ('', f"{file}")
     blob = bucket.blob(fileName)
 
     with open(f'resources/{file}', 'rb') as f:
@@ -32,4 +32,4 @@ def uploadFile(file):
     print("Upload complete!")
 
 
-uploadFile("meme.png")
+# uploadFile("wakeupcat.jpeg")
