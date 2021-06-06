@@ -108,11 +108,8 @@ def run_quicktart_pdf(file):
             log.debug(text)
 
     # pdb.set_trace()
-    # print the full text from the first page.
-    # The response contains more information:
-    # annotation/pages/blocks/paragraphs/words/symbols
-    # including confidence scores and bounding boxes
 
+    # print the full text from the first page:
     # print('Full text:\n')
     # print(annotation['text'])
 
