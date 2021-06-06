@@ -1,7 +1,3 @@
-# gs://pdf_ex123/領収書サンプル.pdf
-# gs://pdf_ex123/sample1.pdf
-# gs://pdf_ex123/sample4.pdf
-
 import logging
 import pdb
 import io
@@ -14,6 +10,7 @@ import os
 import re
 import uuid
 
+# gs://pdf_ex123/sample4.pdf
 
 # def async_detect_document(gcs_source_uri, gcs_destination_uri):
 """OCR with PDF/TIFF as source files on GCS"""
