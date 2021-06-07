@@ -1,3 +1,4 @@
 **/ServiceAccountToken.json
 
 **/**.ignore
+**/__pycache__/**

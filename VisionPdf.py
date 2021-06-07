@@ -25,7 +25,7 @@ def run_quicktart_pdf(file):
     client = vision_v1.ImageAnnotatorClient()
 
     # generate random id
-    id = str(uuid.uuid1())[:4]
+    id = str(uuid.uuid1())
 
     # Supported mime_types are: 'application/pdf' and 'image/tiff'
     mime_type = 'application/pdf'
