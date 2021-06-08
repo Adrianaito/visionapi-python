@@ -33,8 +33,6 @@ def run_quickstart_pdf(file):
     # How many pages should be grouped into each json output file.
     batch_size = 100
 
-    # client = vision.ImageAnnotatorClient()
-
     feature = vision_v1.Feature(
         type_=vision_v1.Feature.Type.DOCUMENT_TEXT_DETECTION)
 
