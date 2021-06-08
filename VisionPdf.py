@@ -16,7 +16,7 @@ from uploadFile import uploadFile
 """OCR with PDF/TIFF as source files on GCS"""
 
 
-def run_quicktart_pdf(file):
+def run_quickstart_pdf(file):
 
     uploadFile(file)
 
@@ -38,12 +38,12 @@ def run_quicktart_pdf(file):
     feature = vision_v1.Feature(
         type_=vision_v1.Feature.Type.DOCUMENT_TEXT_DETECTION)
 
-    gcs_source_uri = f"gs://pdf_ex123/{file}"
+    gcs_source_uri = f"gs://pdf_upload/{file}"
     gcs_source = vision_v1.GcsSource(uri=gcs_source_uri)
     input_config = vision_v1.InputConfig(
         gcs_source=gcs_source, mime_type=mime_type)
 
-    gcs_destination_uri = f'gs://pdf_ex123/pdf_output/{file}_{id}_'
+    gcs_destination_uri = f'gs://pdf_upload/pdf_output/{file}_{id}_'
     gcs_destination = vision_v1.GcsDestination(uri=gcs_destination_uri)
     output_config = vision_v1.OutputConfig(
         gcs_destination=gcs_destination, batch_size=batch_size)
@@ -98,7 +98,7 @@ def run_quicktart_pdf(file):
             print(text)
             print(pageNumber)
 
-            logging.basicConfig(filename="myResponseText.log",
+            logging.basicConfig(filename="ResponseText.log",
                                 filemode='a',
                                 format='%(message)s',
                                 datefmt='%H:%M:%S',
@@ -114,4 +114,4 @@ def run_quicktart_pdf(file):
     # print(annotation['text'])
 
 
-run_quicktart_pdf("sample1.pdf")
+run_quickstart_pdf("sample1.pdf")
