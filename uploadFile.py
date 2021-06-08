@@ -12,7 +12,7 @@ def uploadFile(file):
     storage_client = storage.Client.from_service_account_json(
         "ServiceAccountToken.json")
 
-    bucket = storage_client.get_bucket("pdf_ex123")
+    bucket = storage_client.get_bucket("pdf_upload")
 
     id = str(uuid.uuid1())[:4]
 
